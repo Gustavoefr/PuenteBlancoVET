@@ -1,4 +1,4 @@
-package com.puenteblanco.pb.entity;
+package com.pb.puenteblancovet.entity;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -11,7 +11,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idorden;
 
-    private Double totalPrice;
+    private Double totalPriceProducts;
 
     private LocalDateTime createdAt;
 
