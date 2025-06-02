@@ -1,6 +1,6 @@
-package com.puenteblanco.pb.services.interfaces;
+package com.pb.puenteblancovet.services.interfaces;
 
-import com.puenteblanco.pb.dto.request.AppointmentRequestDto;
+import com.pb.puenteblancovet.dto.request.AppointmentRequestDto;
 import org.springframework.security.core.Authentication;
 
 public interface AppointmentClientService {

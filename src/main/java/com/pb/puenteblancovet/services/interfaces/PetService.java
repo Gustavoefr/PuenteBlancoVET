@@ -1,7 +1,7 @@
-package com.puenteblanco.pb.services.interfaces;
+package com.pb.puenteblancovet.services.interfaces;
 
-import com.puenteblanco.pb.entity.Pet;
-import com.puenteblanco.pb.repository.PetRepository;
+import com.pb.puenteblancovet.entity.Pet;
+import com.pb.puenteblancovet.repository.PetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
-package com.puenteblanco.pb.services.interfaces;
+package com.pb.puenteblancovet.services.interfaces;
 
-import com.puenteblanco.pb.dto.response.VetAppointmentResponseDto;
+import com.pb.puenteblancovet.dto.response.VetAppointmentResponseDto;
 
 import java.time.LocalDate;
 import java.util.List;

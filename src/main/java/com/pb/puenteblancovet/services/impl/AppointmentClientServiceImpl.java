@@ -1,17 +1,17 @@
-package com.puenteblanco.pb.services.impl;
+package com.pb.puenteblancovet.services.impl;
 
-import com.puenteblanco.pb.dto.request.AppointmentRequestDto;
-import com.puenteblanco.pb.entity.Cita;
-import com.puenteblanco.pb.entity.Servicio;
-import com.puenteblanco.pb.entity.User;
-import com.puenteblanco.pb.entity.Veterinario;
-import com.puenteblanco.pb.entity.Pet;
-import com.puenteblanco.pb.repository.PetRepository;
-import com.puenteblanco.pb.repository.CitaRepository;
-import com.puenteblanco.pb.repository.ServiceRepository;
-import com.puenteblanco.pb.repository.UserRepository;
-import com.puenteblanco.pb.repository.VeterinarioRepository;
-import com.puenteblanco.pb.services.interfaces.AppointmentClientService;
+import com.pb.puenteblancovet.dto.request.AppointmentRequestDto;
+import com.pb.puenteblancovet.entity.Cita;
+import com.pb.puenteblancovet.entity.Servicio;
+import com.pb.puenteblancovet.entity.User;
+import com.pb.puenteblancovet.entity.Veterinario;
+import com.pb.puenteblancovet.entity.Pet;
+import com.pb.puenteblancovet.repository.PetRepository;
+import com.pb.puenteblancovet.repository.CitaRepository;
+import com.pb.puenteblancovet.repository.ServiceRepository;
+import com.pb.puenteblancovet.repository.UserRepository;
+import com.pb.puenteblancovet.repository.VeterinarioRepository;
+import com.pb.puenteblancovet.services.interfaces.AppointmentClientService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;

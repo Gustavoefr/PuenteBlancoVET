@@ -1,6 +1,6 @@
-package com.puenteblanco.pb.services.interfaces;
+package com.pb.puenteblancovet.services.interfaces;
 
-import com.puenteblanco.pb.dto.response.AppointmentListResponseDto;
+import com.pb.puenteblancovet.dto.response.AppointmentListResponseDto;
 import org.springframework.security.core.Authentication;
 
 import java.util.List;

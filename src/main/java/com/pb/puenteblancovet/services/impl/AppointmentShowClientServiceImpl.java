@@ -1,11 +1,11 @@
-package com.puenteblanco.pb.services.impl;
+package com.pb.puenteblancovet.services.impl;
 
-import com.puenteblanco.pb.dto.response.AppointmentListResponseDto;
-import com.puenteblanco.pb.entity.Cita;
-import com.puenteblanco.pb.entity.User;
-import com.puenteblanco.pb.repository.CitaRepository;
-import com.puenteblanco.pb.repository.UserRepository;
-import com.puenteblanco.pb.services.interfaces.AppointmentShowClientService;
+import com.pb.puenteblancovet.dto.response.AppointmentListResponseDto;
+import com.pb.puenteblancovet.entity.Cita;
+import com.pb.puenteblancovet.entity.User;
+import com.pb.puenteblancovet.repository.CitaRepository;
+import com.pb.puenteblancovet.repository.UserRepository;
+import com.pb.puenteblancovet.services.interfaces.AppointmentShowClientService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;

@@ -1,10 +1,10 @@
-package com.puenteblanco.pb.services.impl;
+package com.pb.puenteblancovet.services.impl;
 
-import com.puenteblanco.pb.entity.Cita;
-import com.puenteblanco.pb.entity.Horario;
-import com.puenteblanco.pb.repository.CitaRepository;
-import com.puenteblanco.pb.repository.HorarioRepository;
-import com.puenteblanco.pb.services.interfaces.HorarioService;
+import com.pb.puenteblancovet.entity.Cita;
+import com.pb.puenteblancovet.entity.Horario;
+import com.pb.puenteblancovet.repository.CitaRepository;
+import com.pb.puenteblancovet.repository.HorarioRepository;
+import com.pb.puenteblancovet.services.interfaces.HorarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
-package com.puenteblanco.pb.services.interfaces;
+package com.pb.puenteblancovet.services.interfaces;
 
-import com.puenteblanco.pb.dto.dashboard.DashboardClientResponseDto;
+import com.pb.puenteblancovet.dto.dashboard.DashboardClientResponseDto;
 import org.springframework.security.core.Authentication;
 
 public interface DashboardService {

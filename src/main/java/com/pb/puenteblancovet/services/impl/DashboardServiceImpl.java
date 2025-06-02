@@ -1,9 +1,9 @@
-package com.puenteblanco.pb.services.impl;
+package com.pb.puenteblancovet.services.impl;
 
-import com.puenteblanco.pb.dto.dashboard.DashboardClientResponseDto;
-import com.puenteblanco.pb.entity.User;
-import com.puenteblanco.pb.repository.UserRepository;
-import com.puenteblanco.pb.services.interfaces.DashboardService;
+import com.pb.puenteblancovet.dto.dashboard.DashboardClientResponseDto;
+import com.pb.puenteblancovet.entity.User;
+import com.pb.puenteblancovet.repository.UserRepository;
+import com.pb.puenteblancovet.services.interfaces.DashboardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;

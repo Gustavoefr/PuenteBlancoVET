@@ -1,10 +1,10 @@
-package com.puenteblanco.pb.services.impl;
+package com.pb.puenteblancovet.services.impl;
 
-import com.puenteblanco.pb.dto.response.VeterinarianListResponseDto;
-import com.puenteblanco.pb.entity.Horario;
-import com.puenteblanco.pb.entity.Veterinario;
-import com.puenteblanco.pb.repository.VeterinarioRepository;
-import com.puenteblanco.pb.services.interfaces.VeterinarioService;
+import com.pb.puenteblancovet.dto.response.VeterinarianListResponseDto;
+import com.pb.puenteblancovet.entity.Horario;
+import com.pb.puenteblancovet.entity.Veterinario;
+import com.pb.puenteblancovet.repository.VeterinarioRepository;
+import com.pb.puenteblancovet.services.interfaces.VeterinarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

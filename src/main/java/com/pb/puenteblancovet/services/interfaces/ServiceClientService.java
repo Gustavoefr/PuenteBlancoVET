@@ -1,6 +1,6 @@
-package com.puenteblanco.pb.services.interfaces;
+package com.pb.puenteblancovet.services.interfaces;
 
-import com.puenteblanco.pb.dto.response.ServiceResponseDto;
+import com.pb.puenteblancovet.dto.response.ServiceResponseDto;
 
 import java.util.List;
 

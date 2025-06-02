@@ -1,8 +1,8 @@
-package com.puenteblanco.pb.services.interfaces;
-import com.puenteblanco.pb.dto.request.LoginRequestDto;
-import com.puenteblanco.pb.dto.request.RegisterUserDto;
-import com.puenteblanco.pb.dto.request.RegisterVeterinarianDto;
-import com.puenteblanco.pb.dto.response.LoginResponseDto;
+package com.pb.puenteblancovet.services.interfaces;
+import com.pb.puenteblancovet.dto.request.LoginRequestDto;
+import com.pb.puenteblancovet.dto.request.RegisterUserDto;
+import com.pb.puenteblancovet.dto.request.RegisterVeterinarianDto;
+import com.pb.puenteblancovet.dto.response.LoginResponseDto;
 
 public interface AuthService {
     void registerClient(RegisterUserDto dto);

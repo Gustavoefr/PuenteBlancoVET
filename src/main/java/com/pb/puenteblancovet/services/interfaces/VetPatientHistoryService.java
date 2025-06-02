@@ -1,7 +1,7 @@
-package com.puenteblanco.pb.services.interfaces;
+package com.pb.puenteblancovet.services.interfaces;
 
-import com.puenteblanco.pb.dto.response.VetClinicalRecordResponseDto;
-import com.puenteblanco.pb.dto.response.VetPatientListResponseDto;
+import com.pb.puenteblancovet.dto.response.VetClinicalRecordResponseDto;
+import com.pb.puenteblancovet.dto.response.VetPatientListResponseDto;
 
 import java.util.List;
 

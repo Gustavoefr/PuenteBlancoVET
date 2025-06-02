@@ -1,9 +1,9 @@
-package com.puenteblanco.pb.services.impl;
+package com.pb.puenteblancovet.services.impl;
 
-import com.puenteblanco.pb.dto.response.ServiceResponseDto;
-import com.puenteblanco.pb.entity.Servicio;
-import com.puenteblanco.pb.repository.ServiceRepository;
-import com.puenteblanco.pb.services.interfaces.ServiceClientService;
+import com.pb.puenteblancovet.dto.response.ServiceResponseDto;
+import com.pb.puenteblancovet.entity.Servicio;
+import com.pb.puenteblancovet.repository.ServiceRepository;
+import com.pb.puenteblancovet.services.interfaces.ServiceClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

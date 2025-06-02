@@ -1,4 +1,4 @@
-package com.puenteblanco.pb.services.interfaces;
+package com.pb.puenteblancovet.services.interfaces;
 
 import java.time.LocalDate;
 import java.util.List;

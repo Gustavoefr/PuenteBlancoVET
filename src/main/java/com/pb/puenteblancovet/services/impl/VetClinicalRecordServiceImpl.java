@@ -1,13 +1,13 @@
 // HistorialMedicoServiceImpl.java
-package com.puenteblanco.pb.services.impl;
+package com.pb.puenteblancovet.services.impl;
 
-import com.puenteblanco.pb.dto.request.AttendAppointmentRequestDto;
-import com.puenteblanco.pb.dto.response.AppointmentDetailResponseDto;
-import com.puenteblanco.pb.entity.AtencionMedica;
-import com.puenteblanco.pb.entity.Cita;
-import com.puenteblanco.pb.repository.AtencionMedicaRepository;
-import com.puenteblanco.pb.repository.CitaRepository;
-import com.puenteblanco.pb.services.interfaces.VetClinicalRecordService;
+import com.pb.puenteblancovet.dto.request.AttendAppointmentRequestDto;
+import com.pb.puenteblancovet.dto.response.AppointmentDetailResponseDto;
+import com.pb.puenteblancovet.entity.AtencionMedica;
+import com.pb.puenteblancovet.entity.Cita;
+import com.pb.puenteblancovet.repository.AtencionMedicaRepository;
+import com.pb.puenteblancovet.repository.CitaRepository;
+import com.pb.puenteblancovet.services.interfaces.VetClinicalRecordService;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;

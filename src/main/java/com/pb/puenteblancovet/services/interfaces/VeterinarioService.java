@@ -1,6 +1,6 @@
-package com.puenteblanco.pb.services.interfaces;
+package com.pb.puenteblancovet.services.interfaces;
 
-import com.puenteblanco.pb.dto.response.VeterinarianListResponseDto;
+import com.pb.puenteblancovet.dto.response.VeterinarianListResponseDto;
 import java.util.List;
 
 public interface VeterinarioService {

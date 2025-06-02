@@ -1,7 +1,7 @@
-package com.puenteblanco.pb.services.interfaces;
+package com.pb.puenteblancovet.services.interfaces;
 
-import com.puenteblanco.pb.dto.response.AppointmentDetailResponseDto;
-import com.puenteblanco.pb.dto.request.AttendAppointmentRequestDto;
+import com.pb.puenteblancovet.dto.response.AppointmentDetailResponseDto;
+import com.pb.puenteblancovet.dto.request.AttendAppointmentRequestDto;
 
 public interface VetClinicalRecordService {
 
