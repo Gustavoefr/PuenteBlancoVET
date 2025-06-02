@@ -1,6 +1,6 @@
-package com.puenteblanco.pb.controller.client;
+package com.pb.puenteblancovet.controller.client;
 
-import com.puenteblanco.pb.dto.view.VaccineDto;
+import com.pb.puenteblancovet.dto.view.VaccineDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

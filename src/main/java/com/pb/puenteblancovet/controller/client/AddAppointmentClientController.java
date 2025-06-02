@@ -1,7 +1,7 @@
-package com.puenteblanco.pb.controller.client;
+package com.pb.puenteblancovet.controller.client;
 
-import com.puenteblanco.pb.dto.request.AppointmentRequestDto;
-import com.puenteblanco.pb.services.interfaces.AppointmentClientService;
+import com.pb.puenteblancovet.dto.request.AppointmentRequestDto;
+import com.pb.puenteblancovet.services.interfaces.AppointmentClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;

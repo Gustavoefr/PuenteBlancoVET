@@ -1,10 +1,10 @@
-package com.puenteblanco.pb.controller;
+package com.pb.puenteblancovet.controller;
 
-import com.puenteblanco.pb.dto.request.LoginRequestDto;
-import com.puenteblanco.pb.dto.request.RegisterUserDto;
-import com.puenteblanco.pb.dto.request.RegisterVeterinarianDto;
-import com.puenteblanco.pb.dto.response.LoginResponseDto;
-import com.puenteblanco.pb.services.interfaces.AuthService;
+import com.pb.puenteblancovet.dto.request.LoginRequestDto;
+import com.pb.puenteblancovet.dto.request.RegisterUserDto;
+import com.pb.puenteblancovet.dto.request.RegisterVeterinarianDto;
+import com.pb.puenteblancovet.dto.response.LoginResponseDto;
+import com.pb.puenteblancovet.services.interfaces.AuthService;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;

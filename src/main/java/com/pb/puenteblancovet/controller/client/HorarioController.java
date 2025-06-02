@@ -1,6 +1,6 @@
-package com.puenteblancovet.controller.client;
+package com.pb.puenteblancovet.controller.client;
 
-import com.puenteblanco.pb.services.interfaces.HorarioService;
+import com.pb.puenteblancovet.services.interfaces.HorarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;

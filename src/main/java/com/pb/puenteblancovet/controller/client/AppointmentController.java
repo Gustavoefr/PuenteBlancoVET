@@ -1,8 +1,8 @@
 // AppointmentController.java
-package com.puenteblanco.pb.controller.client;
+package com.pb.puenteblancovet.controller.client;
 
-import com.puenteblanco.pb.dto.response.AppointmentListResponseDto;
-import com.puenteblanco.pb.services.interfaces.AppointmentShowClientService;
+import com.pb.puenteblancovet.dto.response.AppointmentListResponseDto;
+import com.pb.puenteblancovet.services.interfaces.AppointmentShowClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;

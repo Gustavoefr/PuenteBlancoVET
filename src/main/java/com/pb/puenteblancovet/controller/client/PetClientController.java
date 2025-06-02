@@ -1,8 +1,7 @@
-// File: PetClientController.java
-package com.puenteblanco.pb.controller.client;
+package com.pb.puenteblancovet.controller.client;
 
-import com.puenteblanco.pb.entity.Pet;
-import com.puenteblanco.pb.repository.PetRepository;
+import com.pb.puenteblancovet.entity.Pet;
+import com.pb.puenteblancovet.repository.PetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;

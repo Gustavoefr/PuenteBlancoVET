@@ -1,9 +1,8 @@
-// PetController.java – Controlador para gestionar mascotas de usuario
-package com.puenteblanco.pb.controller.client;
+package com.pb.puenteblancovet.controller.client;
 
-import com.puenteblanco.pb.entity.Pet;
-import com.puenteblanco.pb.security.AuthUtils;
-import com.puenteblanco.pb.services.interfaces.PetService;
+import com.pb.puenteblancovet.entity.Pet;
+import com.pb.puenteblancovet.security.AuthUtils;
+import com.pb.puenteblancovet.services.interfaces.PetService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

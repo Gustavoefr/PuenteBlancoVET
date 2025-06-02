@@ -1,7 +1,7 @@
-package com.puenteblanco.pb.controller.client;
+package com.pb.puenteblancovet.controller.client;
 
-import com.puenteblanco.pb.dto.response.ServiceResponseDto;
-import com.puenteblanco.pb.services.interfaces.ServiceClientService;
+import com.pb.puenteblancovet.dto.response.ServiceResponseDto;
+import com.pb.puenteblancovet.services.interfaces.ServiceClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,8 +1,7 @@
-// File: VeterinarianClientController.java
-package com.puenteblanco.pb.controller.client;
+package com.pb.puenteblancovet.controller.client;
 
-import com.puenteblanco.pb.dto.response.VeterinarianResponseDto;
-import com.puenteblanco.pb.services.interfaces.VeterinarianClientService;
+import com.pb.puenteblancovet.dto.response.VeterinarianResponseDto;
+import com.pb.puenteblancovet.services.interfaces.VeterinarianClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

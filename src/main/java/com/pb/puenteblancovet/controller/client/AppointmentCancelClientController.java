@@ -1,7 +1,7 @@
-package com.puenteblanco.pb.controller.client;
+package com.pb.puenteblancovet.controller.client;
 
-import com.puenteblanco.pb.dto.response.AppointmentCancelOptionDto;
-import com.puenteblanco.pb.services.interfaces.AppointmentCancelClientService;
+import com.pb.puenteblancovet.dto.response.AppointmentCancelOptionDto;
+import com.pb.puenteblancovet.services.interfaces.AppointmentCancelClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
