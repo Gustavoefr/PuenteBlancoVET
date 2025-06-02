@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Veterinary Clinic Appointment</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+  <header class="bg-black text-white px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center space-x-2">
+      <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="logo" class="h-6 w-6" />
+      <div>
+        <h1 class="text-lg font-bold leading-4">Puente Blanco</h1>
+        <p class="text-sm text-gray-400 -mt-1">Clinica y Veterinaria</p>
+      </div>
+    </div>
+    <nav class="space-x-6 text-sm font-medium">
+      <a href="#" onclick="toggleRegister()" class="hover:text-blue-300">Sign Up</a>
+      <a href="#" class="hover:text-blue-300">Locate Us</a>
+    </nav>
+  </header>
+
+  <section class="relative w-full h-[400px] bg-gray-300 flex items-center justify-center">
+     <img src="https://scontent.flim2-5.fna.fbcdn.net/v/t39.30808-6/490699257_1109555937855777_1719727227194075931_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=104&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=cbQlR23IZngQ7kNvwE0442O&_nc_oc=AdlIwDGAoBBalmUsUDbaiKkfw4mXQPTvTQNNhEZLkZDPvLrvVd0vMa80Ra-mLlje8ms&_nc_zt=23&_nc_ht=scontent.flim2-5.fna&_nc_gid=O1r_zlEpfvL_XDwP658nDg&oh=00_AfIvYwgbkn0iU2i-lvBT_TZv0qiakUUgIYRKyMTN4NI8XQ&oe=683D752C" alt="Veterinary Banner"
+       class="absolute inset-0 w-full h-full object-cover opacity-80" />
+
+    <div class="absolute bottom-[-48px] left-1/2 transform -translate-x-1/2 bg-white rounded-xl shadow-lg p-6 w-auto flex justify-center gap-6 flex-nowrap overflow-x-auto">
+      <a href="#" onclick="openLogin('CLIENT')" class="flex items-center gap-2 bg-teal-600 text-white px-6 py-3 rounded-lg hover:bg-teal-700 min-w-[200px] justify-center">
+        👤 Iniciar Sesion como Cliente
+      </a>
+      <a href="#" onclick="openLogin('VETERINARIAN')" class="flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 min-w-[200px] justify-center">
+        🩺 Iniciar Sesion como Veterinario
+      </a>
+      <a href="#" onclick="openLogin('INTERN')" class="flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 min-w-[200px] justify-center">
+        👨‍⚕️ Iniciar Sesion como Practicante
+      </a>
+      <a href="#" onclick="openLogin('ADMIN')" class="flex items-center gap-2 bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 min-w-[200px] justify-center">
+        🛡️ Iniciar Sesion como Administrador
+      </a>
+    </div>
+  </section>
+
+  <div id="login-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-white rounded-xl p-6 w-full max-w-md space-y-4">
+      <h2 class="text-xl font-bold text-center">Login</h2>
+      <form id="loginForm">
+        <input type="email" name="correo" placeholder="Correo" required class="w-full px-4 py-2 border rounded mb-3" />
+        <input type="password" name="contrasena" placeholder="Contraseña" required class="w-full px-4 py-2 border rounded mb-4" />
+        <input type="hidden" name="expectedRole" id="expectedRole" />
+        <button type="submit" class="w-full bg-black text-white py-2 rounded hover:bg-gray-800">Iniciar sesión</button>
+      </form>
+      <button onclick="toggleLogin()" class="text-sm text-red-600 text-center block w-full">Cancelar</button>
+    </div>
+  </div>
+
+  <div id="register-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-white rounded-xl p-6 w-full max-w-lg space-y-4">
+      <h2 class="text-xl font-bold text-center">Registro de Cliente</h2>
+      <form id="registerForm" class="space-y-3">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <input type="text" name="nombres" placeholder="Nombres" required class="px-4 py-2 border rounded" />
+          <input type="text" name="apellidoPaterno" placeholder="Apellido Paterno" required class="px-4 py-2 border rounded" />
+          <input type="text" name="apellidoMaterno" placeholder="Apellido Materno" required class="px-4 py-2 border rounded" />
+          <input type="text" name="numeroIdentidad" placeholder="Número de Identidad" required class="px-4 py-2 border rounded" />
+          <input type="text" name="telefono" placeholder="Teléfono" required class="px-4 py-2 border rounded" />
+          <input type="text" name="sexo" placeholder="Sexo (M/F)" required class="px-4 py-2 border rounded" />
+          <input type="date" name="fechaNacimiento" placeholder="Fecha de Nacimiento" required class="px-4 py-2 border rounded" />
+          <input type="number" name="tipoDocumentoId" placeholder="ID Tipo Documento" required class="px-4 py-2 border rounded" />
+        </div>
+        <input type="text" name="direccion" placeholder="Dirección" required class="w-full px-4 py-2 border rounded" />
+        <input type="email" name="correo" placeholder="Correo Electrónico" required class="w-full px-4 py-2 border rounded" />
+        <input type="password" name="contrasena" placeholder="Contraseña" required class="w-full px-4 py-2 border rounded" />
+        <button type="submit" class="w-full bg-black text-white py-2 rounded hover:bg-gray-800">Registrarse</button>
+      </form>
+      <button onclick="toggleRegister()" class="text-sm text-red-600 text-center block w-full">Cancelar</button>
+    </div>
+  </div>
+
+  <script>
+    const loginModal = document.getElementById('login-modal');
+    const registerModal = document.getElementById('register-modal');
+    const expectedRoleInput = document.getElementById('expectedRole');
+
+    function toggleLogin() {
+      loginModal.classList.toggle('hidden');
+    }
+
+    function toggleRegister() {
+      registerModal.classList.toggle('hidden');
+    }
+
+    function openLogin(role) {
+      expectedRoleInput.value = role;
+      toggleLogin();
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const correo = e.target.correo.value;
+      const contrasena = e.target.contrasena.value;
+      const expectedRole = e.target.expectedRole.value;
+
+      try {
+        const response = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ correo, contrasena })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          if (data.rol !== expectedRole) {
+            alert("Rol incorrecto. Esperado: " + expectedRole + ", pero eres: " + data.rol);
+            return;
+          }
+
+          document.cookie = `jwt=${data.token}; path=/; SameSite=Lax`;
+          alert('Bienvenido ' + data.nombreCompleto + ' (' + data.rol + ')');
+
+          switch (data.rol) {
+            case 'CLIENT': window.location.href = '/dashboard'; break;
+            case 'VETERINARIAN': window.location.href = '/vet/veterinarian_dashboard.html'; break;
+            case 'INTERN': window.location.href = '/intern/home.html'; break;
+            case 'ADMIN': window.location.href = '/admin/dashboard.html'; break;
+          }
+
+        } else {
+          alert(data.error || "Credenciales incorrectas");
+        }
+
+      } catch (err) {
+        alert("Error al conectar con el servidor.");
+        console.error(err);
+      }
+    });
+
+    document.getElementById('registerForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(e.target);
+      const body = Object.fromEntries(formData.entries());
+
+      body.fechaNacimiento = new Date(body.fechaNacimiento).toISOString().split('T')[0];
+      body.tipoDocumentoId = parseInt(body.tipoDocumentoId);
+
+      try {
+        const response = await fetch('/api/auth/register/client', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+
+        if (response.ok) {
+          alert("Cliente registrado exitosamente.");
+          toggleRegister();
+        } else {
+          const errorText = await response.text();
+          alert("Error: " + errorText);
+        }
+      } catch (err) {
+        alert("Error al conectar con el servidor.");
+        console.error(err);
+      }
+    });
+  </script>
+
+</body>
+</html>

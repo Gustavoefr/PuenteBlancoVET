@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Puente Blanco</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen flex">
+
+    <header class="bg-blue-900 text-white py-4 px-6 flex justify-between items-center w-full fixed top-0 z-10">
+        <h1 class="text-xl font-bold">Clínica y Veterinaria Puente Blanco</h1>
+        <span th:text="'Welcome, ' + ${dashboard.fullName}"></span>
+    </header>
+
+    <div class="flex pt-20 w-full">
+
+        <aside class="w-64 bg-gray-800 text-white flex flex-col justify-between">
+            <div>
+                <nav class="flex flex-col p-4 space-y-4">
+                    <a th:href="@{/dashboard}" class="flex items-center gap-3 font-semibold hover:text-blue-300">
+                        <i class="fa-solid fa-table-columns"></i> Dashboard
+                    </a>
+                    <a th:href="@{/book-appointment}" class="flex items-center gap-3 hover:text-blue-300">
+                        <i class="fa-solid fa-calendar-plus"></i> Agendar Cita
+                    </a>
+                    <a th:href="@{/appointments}" class="flex items-center gap-3 hover:text-blue-300">
+                        <i class="fa-solid fa-calendar-days"></i> Ver Citas
+                    </a>
+                    <a th:href="@{/cancel-appointment}" class="flex items-center gap-3 hover:text-blue-300">
+                        <i class="fa-solid fa-ban"></i> Cancelar Cita
+                    </a>
+                    <a th:href="@{/veterinarians}" class="flex items-center gap-3 hover:text-blue-300">
+                        <i class="fa-solid fa-user-md"></i> Veterinarios
+                    </a>
+                    <a th:href="@{/vaccination}" class="flex items-center gap-3 hover:text-blue-300">
+                        <i class="fa-solid fa-syringe"></i> Vacunación
+                    </a>
+                </nav>
+            </div>
+            <button onclick="logout()" class="m-4 flex items-center justify-center gap-2 bg-gray-100 text-red-500 px-4 py-2 rounded hover:bg-gray-200">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i> Cerrar Sesión
+            </button>
+        </aside>
+
+        <main class="flex-1 p-10">
+            <h2 class="text-3xl font-bold mb-2">DASHBOARD</h2>
+            <p class="text-gray-600 mb-6">Welcome to Veterinary Clinic Appointment</p>
+
+            <div class="grid grid-cols-3 gap-6 mb-8">
+                <a th:href="@{/calendar}" class="bg-pink-500 hover:bg-pink-600 text-white p-6 rounded-lg text-center shadow-md">
+                    <div class="text-xl font-semibold">Mostrar Calendario</div>
+                </a>
+                <a th:href="@{${dashboard.paymentPath}}" class="bg-green-700 hover:bg-green-800 text-white p-6 rounded-lg text-center shadow-md">
+                    <div class="text-xl font-semibold">Pagos</div>
+                </a>
+                <a th:href="@{/pets}" class="bg-blue-600 hover:bg-blue-700 text-white p-6 rounded-lg text-center shadow-md">
+                    <div class="text-xl font-semibold">Mascotas</div>
+                </a>
+            </div>
+
+            <div class="bg-white border-2 border-blue-400 rounded-lg shadow-md p-6 mb-6">
+                <h3 class="text-xl font-bold text-center text-blue-600 mb-4">Mis Mascotas</h3>
+
+                <div th:if="${pets.empty}">
+                    <p class="text-gray-600">No se encontraron mascotas registradas.</p>
+                </div>
+
+                <div th:if="${not pets.empty}" class="flex flex-col gap-4">
+                    <div th:each="pet : ${pets}" class="border border-gray-200 rounded-lg p-4 bg-gray-50 shadow-sm">
+                        <p><strong>Nombre:</strong> <span th:text="${pet.name}"></span></p>
+                        <p><strong>Tipo:</strong> <span th:text="${pet.type}"></span></p>
+                        <p><strong>Raza:</strong> <span th:text="${pet.breed}"></span></p>
+                        <p><strong>Edad:</strong> <span th:text="${pet.age}"></span></p>
+                        <p><strong>Sexo:</strong> <span th:text="${pet.sex}"></span></p>
+                        <p><strong>Peso:</strong> <span th:text="${pet.weight} + ' kg'"></span></p>
+
+                        <button onclick="deletePet(this)" th:attr="data-id=${pet.id}"
+                                class="text-red-600 hover:text-red-800 font-semibold mt-3">
+                            Eliminar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="font-semibold mb-2">Información de la Clínica Veterinaria</h3>
+                <p><strong>Dirección:</strong> Urb. Puente Blanco J-9 Ica, Ica, Perú</p>
+                <p><strong>Email:</strong> clifarveteirl@hotmail.com</p>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function deletePet(button) {
+            const petId = button.getAttribute("data-id");
+
+            if (!confirm("¿Estás seguro de que deseas eliminar esta mascota?")) return;
+
+            fetch(`/pets/${petId}`, {
+                method: "DELETE",
+                credentials: "include"
+            })
+            .then(res => {
+                if (res.ok) {
+                    alert("Mascota eliminada exitosamente.");
+                    location.reload();
+                } else {
+                    console.error("Error:", res.status);
+                    alert("No se pudo eliminar la mascota.");
+                }
+            })
+            .catch(err => {
+                console.error("Error:", err);
+                alert("Error de conexión al eliminar mascota.");
+            });
+        }
+
+        function logout() {
+            document.cookie = "jwt=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Lax";
+            window.location.href = "/";
+        }
+    </script>
+
+</body>
+</html>

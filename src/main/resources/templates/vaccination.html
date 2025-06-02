@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pet Vaccination Schedules</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+  <header class="bg-blue-900 text-white py-4 px-6 flex justify-between items-center">
+        <h1 class="text-xl font-bold">Clinica y Veterinaria Puente Blanco</h1>
+    </header>
+  <div class="flex">
+    <aside class="w-64 bg-gray-800 text-white h-screen p-6 space-y-6">
+            <nav class="flex flex-col gap-4">
+                <a href="#" class="font-semibold text-white">Dashboard</a>
+                <a th:href="@{/book-appointment}" class="hover:text-blue-300">Agendar Cita</a>
+                <a th:href="@{/appointments}" class="hover:text-blue-300">Ver Citas</a>
+                <a th:href="@{/cancel-appointment}" class="hover:text-blue-300">Cancelar Cita</a>
+                <a th:href="@{/veterinarians}" class="hover:text-blue-300">Veterinarios</a>
+                <a th:href="@{/vaccination}" class="hover:text-blue-300">Vacunación</a>
+                <a href="#" onclick="logout()" class="hover:text-red-400">Cerrar Sesión</a>
+            </nav>
+    </aside>
+
+    <main class="flex-1 p-10">
+      <h2 class="text-3xl font-bold mb-6">Calendario de Vacunación para Mascotas</h2>
+
+      <div class="flex gap-4 mb-6">
+        <button onclick="showTab('cat')" id="tab-cat" class="bg-purple-600 text-white px-4 py-2 rounded font-semibold">
+          😺 Vacunas Para Gatos
+        </button>
+        <button onclick="showTab('dog')" id="tab-dog" class="bg-white text-gray-800 px-4 py-2 rounded border font-semibold">
+          🐶 Vacunas Para Perros
+        </button>
+      </div>
+
+      <div id="table-cat" class="bg-purple-50 p-6 rounded-lg shadow">
+        <h3 class="text-xl font-bold mb-4">Vacunas Recomendadas Para Gatos</h3>
+        <table class="min-w-full bg-white border">
+          <thead class="bg-purple-200">
+            <tr>
+              <th class="p-2 border">Tipo de vacuna	</th>
+              <th class="p-2 border">Edad recomendada</th>
+              <th class="p-2 border">Dosis	</th>
+              <th class="p-2 border">Frecuencia	</th>
+              <th class="p-2 border">Comentarios</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="v : ${catVaccines}">
+              <td class="border p-2" th:text="${v.type}">Tipo de vacuna</td>
+              <td class="border p-2" th:text="${v.age}">Edad recomendada</td>
+              <td class="border p-2" th:text="${v.doses}">Dosis</td>
+              <td class="border p-2" th:text="${v.frequency}">Frecuencia</td>
+              <td class="border p-2" th:text="${v.comments}">Comentarios</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="table-dog" class="hidden bg-yellow-50 p-6 rounded-lg shadow">
+        <h3 class="text-xl font-bold mb-4">Vacunas Recomendadas Para Perros</h3>
+        <table class="min-w-full bg-white border">
+          <thead class="bg-yellow-200">
+            <tr>
+              <th class="p-2 border">Tipo de vacuna</th>
+              <th class="p-2 border">Edad recomendada</th>
+              <th class="p-2 border">Dosis</th>
+              <th class="p-2 border">Frecuencia</th>
+              <th class="p-2 border">Comentarios</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="v : ${dogVaccines}">
+              <td class="border p-2" th:text="${v.type}">Tipo de vacuna</td>
+              <td class="border p-2" th:text="${v.age}">Edad recomendada</td>
+              <td class="border p-2" th:text="${v.doses}">Dosis</td>
+              <td class="border p-2" th:text="${v.frequency}">Frecuencia</td>
+              <td class="border p-2" th:text="${v.comments}">Comentarios</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function showTab(tab) {
+      const cat = document.getElementById("table-cat");
+      const dog = document.getElementById("table-dog");
+      const tabCat = document.getElementById("tab-cat");
+      const tabDog = document.getElementById("tab-dog");
+
+      if (tab === 'cat') {
+        cat.classList.remove("hidden");
+        dog.classList.add("hidden");
+        tabCat.classList.add("bg-purple-600", "text-white");
+        tabDog.classList.remove("bg-yellow-400", "text-white");
+      } else {
+        dog.classList.remove("hidden");
+        cat.classList.add("hidden");
+        tabDog.classList.add("bg-yellow-400", "text-white");
+        tabCat.classList.remove("bg-purple-600", "text-white");
+      }
+    }
+
+    function logout() {
+    document.cookie = "jwt=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Lax";
+
+    window.location.href = "/";
+  }
+  </script>
+</body>
+</html>

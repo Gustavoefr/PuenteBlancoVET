@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mis Citas - Puente Blanco</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+  <header class="bg-blue-900 text-white py-4 px-6 flex justify-between items-center">
+    <h1 class="text-xl font-bold">Clinica y Veterinaria Puente Blanco</h1>
+    <span>Mis Citas</span>
+  </header>
+
+  <div class="flex">
+    <aside class="w-64 bg-gray-800 text-white min-h-screen p-6 space-y-6">
+      <nav class="flex flex-col gap-4">
+        <a th:href="@{/dashboard}" class="hover:text-blue-300">Dashboard</a>
+        <a th:href="@{/book-appointment}" class="hover:text-blue-300">Agendar Cita</a>
+        <a th:href="@{/appointments}" class="font-semibold text-white">Ver Citas</a>
+        <a th:href="@{/cancel-appointment}" class="hover:text-blue-300">Cancelar Cita</a>
+        <a th:href="@{/veterinarians}" class="hover:text-blue-300">Veterinarios</a>
+        <a th:href="@{/vaccination}" class="hover:text-blue-300">Vacunación</a>
+        <a href="#" onclick="logout()" class="hover:text-red-400">Cerrar Sesión</a>
+      </nav>
+    </aside>
+
+    <main class="flex-1 p-10">
+      <h2 class="text-3xl font-bold mb-6">Historial de Citas</h2>
+
+      <div class="overflow-x-auto bg-white rounded shadow-md">
+        <table class="min-w-full text-sm text-left border">
+          <thead class="bg-gray-200 text-gray-700 uppercase text-xs">
+            <tr>
+              <th class="px-6 py-3">Fecha y hora</th>
+              <th class="px-6 py-3">Mascota</th>
+              <th class="px-6 py-3">Servicio</th>
+              <th class="px-6 py-3">Veterinario</th>
+              <th class="px-6 py-3">Estado</th>
+            </tr>
+          </thead>
+          <tbody id="appointmentTableBody" class="text-gray-800"></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    const token = getCookie("jwt");
+
+    fetch("/api/client/appointments", {
+      credentials: "include",
+    })
+    .then(res => res.json())
+    .then(data => {
+      const tbody = document.getElementById("appointmentTableBody");
+      tbody.innerHTML = "";
+
+      console.log("Datos recibidos:", data);
+      data.forEach(cita => {
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+          <td class="px-6 py-4">${cita.fecha} ${cita.hora}</td>
+          <td class="px-6 py-4">${cita.veterinario}</td>
+          <td class="px-6 py-4">${cita.servicio}</td>
+          <td class="px-6 py-4">${cita.mascota}</td>
+          <td class="px-6 py-4">${renderStatusBadge(cita.estado)}</td>
+        `;
+
+        tbody.appendChild(tr);
+      });
+    })
+    .catch(err => {
+      console.error("Error al cargar citas:", err);
+    });
+
+    function renderStatusBadge(status) {
+      switch (status) {
+        case "REGISTRADA":
+          return `<span class="text-blue-600 border border-blue-600 px-2 py-1 rounded-full text-xs">Registered</span>`;
+        case "FINALIZADA":
+          return `<span class="text-green-600 bg-green-100 px-2 py-1 rounded-full text-xs">Completed</span>`;
+        case "CANCELADA":
+          return `<span class="text-red-600 bg-red-100 px-2 py-1 rounded-full text-xs">Cancelled</span>`;
+        default:
+          return `<span class="text-gray-600 bg-gray-100 px-2 py-1 rounded-full text-xs">${status}</span>`;
+      }
+    }
+
+    function logout() {
+    document.cookie = "jwt=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Lax";
+
+    window.location.href = "/";
+  }
+  </script>
+
+</body>
+</html>

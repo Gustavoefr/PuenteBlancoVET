@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Reservar Cita - Puente Blanco</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+  <!-- Barra superior -->
+  <header class="bg-blue-900 text-white py-4 px-6 flex justify-between items-center">
+    <h1 class="text-xl font-bold">Clínica y Veterinaria Puente Blanco</h1>
+  </header>
+
+  <div class="flex">
+    <aside class="w-64 bg-gray-800 text-white min-h-screen p-6 space-y-6">
+      <nav class="flex flex-col gap-4">
+        <a th:href="@{/dashboard}" class="hover:text-blue-300">Dashboard</a>
+        <a th:href="@{/book-appointment}" class="font-semibold text-white">Agendar Cita</a>
+        <a th:href="@{/appointments}" class="hover:text-blue-300">Ver Citas</a>
+        <a th:href="@{/cancel-appointment}" class="hover:text-blue-300">Cancelar Cita</a>
+        <a th:href="@{/veterinarians}" class="hover:text-blue-300">Veterinarios</a>
+        <a th:href="@{/vaccination}" class="hover:text-blue-300">Vacunación</a>
+        <a href="#" onclick="logout()" class="hover:text-red-400">Cerrar Sesión</a>
+      </nav>
+    </aside>
+
+    <main class="flex-1 p-10">
+      <h2 class="text-3xl font-bold mb-6">Reservar Cita</h2>
+
+      <div class="bg-white p-8 rounded-lg shadow-md max-w-xl">
+        <form id="appointmentForm" class="space-y-4">
+
+          <div>
+            <label for="pet" class="block mb-1 font-medium">Mascota</label>
+            <select id="pet" name="petId" required class="w-full border border-gray-300 p-2 rounded">
+              <option disabled selected>Seleccione una mascota</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="servicio" class="block mb-1 font-medium">Servicio</label>
+            <select id="servicio" name="servicioId" required class="w-full border border-gray-300 p-2 rounded">
+              <option disabled selected>Seleccione un servicio</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="veterinario" class="block mb-1 font-medium">Veterinario</label>
+            <select id="veterinario" name="veterinarioId" required class="w-full border border-gray-300 p-2 rounded">
+              <option disabled selected>Seleccione un veterinario</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="fecha" class="block mb-1 font-medium">Fecha</label>
+            <input type="date" id="fecha" name="fecha" required class="w-full border border-gray-300 p-2 rounded" />
+          </div>
+
+          <div id="horaContainer" class="hidden">
+            <label class="block mb-1 font-medium">Seleccione una hora</label>
+            <div id="slots" class="grid grid-cols-3 gap-3"></div>
+          </div>
+          <input type="hidden" id="horaSeleccionada" name="hora" required />
+
+          <button type="submit" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded">
+            Reservar Cita
+          </button>
+        </form>
+
+        <div id="mensaje" class="text-center mt-4 text-sm font-medium"></div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      fetch('/api/client/pets')
+      .then(res => res.json())
+      .then(data => {   
+        const petSelect = document.getElementById('pet');
+        data.forEach(pet => {
+          const option = document.createElement('option');
+          option.value = pet.id;
+          option.textContent = `${pet.name} (${pet.breed})`;
+          petSelect.appendChild(option);
+        });
+      });
+
+      // Cargar servicios
+      fetch('/api/client/services')
+        .then(res => res.json())
+        .then(data => {
+          const servicioSelect = document.getElementById('servicio');
+          data.forEach(servicio => {
+            const option = document.createElement('option');
+            option.value = servicio.id;
+            option.textContent = servicio.nombre || servicio.descripcion || 'Servicio';
+            servicioSelect.appendChild(option);
+          });
+        });
+
+      // Cargar veterinarios
+      fetch('/api/client/veterinarians')
+        .then(res => res.json())
+        .then(data => {
+          const veterinarioSelect = document.getElementById('veterinario');
+          data.forEach(vet => {
+            const option = document.createElement('option');
+            option.value = vet.id;
+            option.textContent = vet.nombreCompleto;
+            veterinarioSelect.appendChild(option);
+          });
+        });
+    });
+
+    // Cargar horarios disponibles
+    document.getElementById('fecha').addEventListener('change', cargarHorarios);
+    document.getElementById('veterinario').addEventListener('change', cargarHorarios);
+
+    function cargarHorarios() {
+      const veterinarioId = document.getElementById('veterinario').value;
+      const fecha = document.getElementById('fecha').value;
+
+      if (!veterinarioId || !fecha) return;
+
+      fetch(`/api/client/veterinarians/${veterinarioId}/horarios?fecha=${fecha}`)
+        .then(res => res.json())
+        .then(horasDisponibles => {
+          const contenedor = document.getElementById('slots');
+          contenedor.innerHTML = '';
+          document.getElementById('horaContainer').classList.remove('hidden');
+
+          if (horasDisponibles.length === 0) {
+            contenedor.innerHTML = '<p class="text-gray-600 col-span-3">No hay horarios disponibles para esta fecha.</p>';
+            return;
+          }
+
+          horasDisponibles.forEach(hora => {
+            const btn = document.createElement('button');
+            btn.type = "button";
+            btn.textContent = hora;
+            btn.className = "border rounded px-4 py-2 bg-white hover:bg-blue-100";
+            btn.onclick = () => {
+              document.querySelectorAll('#slots button').forEach(b => b.classList.remove('bg-blue-500', 'text-white'));
+              btn.classList.add('bg-blue-500', 'text-white');
+              document.getElementById('horaSeleccionada').value = hora;
+            };
+            contenedor.appendChild(btn);
+          });
+        })
+        .catch(() => {
+          document.getElementById('slots').innerHTML = '<p class="text-red-500">Error al cargar horarios.</p>';
+        });
+    }
+
+    document.getElementById('appointmentForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const data = {
+        petId: document.getElementById('pet').value,
+        servicioId: document.getElementById('servicio').value,
+        veterinarioId: document.getElementById('veterinario').value,
+        fecha: document.getElementById('fecha').value,
+        hora: document.getElementById('horaSeleccionada').value
+      };
+
+      fetch('/api/client/appointments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(res => {
+        if (!res.ok) throw new Error('Error al registrar la cita');
+        return res.text();
+      })
+      .then(msg => {
+        document.getElementById('mensaje').textContent = msg;
+        document.getElementById('mensaje').className = "text-green-600 mt-4 text-center";
+        document.getElementById('appointmentForm').reset();
+        document.getElementById('slots').innerHTML = '';
+        document.getElementById('horaContainer').classList.add('hidden');
+      })
+      .catch(err => {
+        document.getElementById('mensaje').textContent = err.message;
+        document.getElementById('mensaje').className = "text-red-600 mt-4 text-center";
+      });
+    });
+
+    function logout() {
+      document.cookie = "jwt=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Lax";
+      window.location.href = "/";
+    }
+  </script>
+</body>
+</html>
