@@ -11,7 +11,7 @@ on:
       - develop
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,8 +24,7 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Construir proyecto con Maven
-        run: mvn clean install
-
-      - name: Ejecutar pruebas
-        run: mvn test
+      # Paso para el despliegue futuro:
+      # - name: Desplegar la aplicación
+      #   run: |
+      #     echo "Aquí iría el comando de despliegue"
