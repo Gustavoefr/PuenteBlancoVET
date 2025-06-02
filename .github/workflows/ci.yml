@@ -1,0 +1,30 @@
+name: CI - Puente Blanco Backend
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v3
+
+      - name: Configurar Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # Paso para el despliegue futuro:
+      # - name: Desplegar la aplicación
+      #   run: |
+      #     echo "Aquí iría el comando de despliegue"
