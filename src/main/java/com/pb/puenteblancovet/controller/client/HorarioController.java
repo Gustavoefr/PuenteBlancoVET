@@ -1,4 +1,4 @@
-package com.puenteblanco.pb.controller.client;
+package com.puenteblancovet.controller.client;
 
 import com.puenteblanco.pb.services.interfaces.HorarioService;
 import lombok.RequiredArgsConstructor;
