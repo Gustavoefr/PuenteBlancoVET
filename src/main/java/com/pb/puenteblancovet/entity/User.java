@@ -1,76 +1,63 @@
-package com.puenteblanco.pb.entity;
+package com.pb.puenteblancovet.entity;
 
 import jakarta.persistence.*;
-import java.util.Set;
+import lombok.*;
+
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "user")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class User extends AudityEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private String nombres;
+
+    @Column(name = "apellido_paterno", nullable = false)
+    private String apellidoPaterno;
+
+    @Column(name = "apellido_materno", nullable = false)
+    private String apellidoMaterno;
+
+    @Column(nullable = false)
+    private String contrasena;
+
+    @Column(name = "numero_identidad", unique = true, nullable = false)
+    private String numeroIdentidad;
+
+    @Column(nullable = false)
+    private String sexo;
+
+    @Column(nullable = false)
+    private String telefono;
+
+    @Column(name = "fecha_nacimiento", nullable = false)
+    private LocalDate fechaNacimiento;
 
     @Column(unique = true, nullable = false)
-    private String email;
+    private String correo;
 
-    private String password;
+    private String direccion;
+
+    @Column(nullable = false)
+    private Boolean estado = true;
 
     @ManyToOne
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
-    @OneToMany(mappedBy = "user")
-    private Set<Order> orders;
+    @ManyToOne
+    @JoinColumn(name = "tipo_documento_id", nullable = false)
+    private TipoDocumento tipoDocumento;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public Set<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(Set<Order> orders) {
-        this.orders = orders;
-    }
+    @OneToOne(mappedBy = "usuario", fetch = FetchType.LAZY)
+    private Veterinario veterinario;
 }
