@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Calendario de Citas - Puente Blanco</title>
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        #calendar {
+            background-color: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .fc .fc-toolbar-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+    <header class="bg-blue-900 text-white py-4 px-6 flex justify-between items-center">
+        <h1 class="text-xl font-bold">Clínica y Veterinaria Puente Blanco</h1>
+        <span th:text="'Bienvenido, ' + ${dashboard.fullName}"></span>
+    </header>
+
+    <div class="flex">
+        <aside class="w-64 bg-gray-800 text-white min-h-screen p-6 space-y-6">
+            <nav class="flex flex-col gap-4">
+                <a th:href="@{/dashboard}" class="hover:text-blue-300">Dashboard</a>
+                <a th:href="@{/book-appointment}" class="hover:text-blue-300">Agendar Cita</a>
+                <a th:href="@{/appointments}" class="hover:text-blue-300">Ver Citas</a>
+                <a th:href="@{/cancel-appointment}" class="hover:text-blue-300">Cancelar Cita</a>
+                <a th:href="@{/veterinarians}" class="hover:text-blue-300">Veterinarios</a>
+                <a th:href="@{/vaccination}" class="hover:text-blue-300">Vacunación</a>
+                <a href="#" onclick="logout()" class="hover:text-red-400">Cerrar Sesión</a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 p-10">
+            <h2 class="text-3xl font-bold mb-6">Calendario de Citas</h2>
+            <div id="calendar" class="max-w-6xl mx-auto"></div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+    <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const calendarEl = document.getElementById('calendar');
+
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'timeGridWeek',
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+      },
+      slotMinTime: "08:00:00",
+      slotMaxTime: "18:00:00",
+      allDaySlot: false,
+      events: {
+        url: "/api/client/appointments/calendar",
+        method: "GET",
+        extraParams: {},
+        failure: function() {
+          alert("Error al cargar las citas en el calendario.");
+        },
+        credentials: "include" // importante para JWT en cookie
+      }
+    });
+
+    calendar.render();
+  });
+</script>
+
+</body>
+</html>

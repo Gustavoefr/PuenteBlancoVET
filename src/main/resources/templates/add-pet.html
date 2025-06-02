@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Pet</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen">
+    
+    <header class="bg-blue-900 text-white py-4 px-6 flex justify-between items-center">
+        <h1 class="text-xl font-bold"> Clinica y Veterinaria Puente Blanco</h1>
+    </header>
+
+    <div class="flex">
+        <aside class="w-64 bg-gray-800 text-white min-h-screen p-6 space-y-6">
+            <nav class="flex flex-col gap-4">
+                <a th:href="@{/dashboard}" class="hover:text-blue-300">Dashboard</a>
+                <a th:href="@{/book-appointment}" class="hover:text-blue-300">Agendar Cita</a>
+                <a th:href="@{/appointments}" class="hover:text-blue-300">>Ver Citas</a>
+                <a th:href="@{/cancel-appointment}" class="hover:text-blue-300">Cancelar Cita</a>
+                <a th:href="@{/veterinarians}" class="hover:text-blue-300">Veterinarios</a>
+                <a th:href="@{/vaccination}" class="hover:text-blue-300">Vacunación</a>
+                <a href="#" onclick="logout()" class="hover:text-red-400">Cerrar Sesión</a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 p-10 flex flex-col items-center">
+            <h2 class="text-3xl font-bold mb-6">Registrar Mascota </h2>
+            <div class="bg-white border-t-4 border-blue-400 rounded-xl shadow-lg p-8 w-full max-w-md">
+                <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Informacion de la Mascota</h2>
+
+                <form th:action="@{/pets}" th:method="post" class="space-y-5">
+
+                    <div>
+                        <label class="block font-medium text-gray-700 mb-1">Nombre de la Mascota:</label>
+                        <input type="text" name="name" required class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400" />
+                    </div>
+
+                    <div>
+                        <label class="block font-medium text-gray-700 mb-1">Edad:</label>
+                        <select name="age" required class="w-full border rounded px-3 py-2">
+                            <option value="">Selecciona la Edad</option>
+                            <th:block th:each="i : ${#numbers.sequence(0, 20)}">
+                                <option th:value="${i}" th:text="${i}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block font-medium text-gray-700 mb-1">Sexo:</label>
+                        <div class="flex space-x-4 mt-1">
+                            <label><input type="radio" name="sex" value="Male" required> Macho</label>
+                            <label><input type="radio" name="sex" value="Female"> Hembra</label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block font-medium text-gray-700 mb-1">Especie:</label>
+                        <div class="flex space-x-4 mt-1">
+                            <label><input type="radio" name="type" value="Cat" required> Gato</label>
+                            <label><input type="radio" name="type" value="Dog"> Perro</label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block font-medium text-gray-700 mb-1">Peso (KG):</label>
+                        <input type="number" name="weight" step="0.1" required class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400" />
+                    </div>
+
+                    <div>
+                        <label class="block font-medium text-gray-700 mb-1">Raza:</label>
+                        <input type="text" name="breed" required class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400" />
+                    </div>
+
+                    <div class="pt-4">
+                        <button type="submit" class="w-full bg-blue-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded">
+                            Añadir
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script>
+  function logout() {
+    document.cookie = "jwt=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Lax";
+
+    window.location.href = "/";
+  }
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cancelar Cita - Puente Blanco</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+  <header class="bg-blue-900 text-white py-4 px-6 flex justify-between items-center">
+    <h1 class="text-xl font-bold">Clinica y Veterinaria Puente Blanco</h1>
+    <span th:text="'Welcome, ' + ${dashboard.fullName}">Welcome</span>
+  </header>
+
+  <div class="flex">
+    <aside class="w-64 bg-gray-800 text-white min-h-screen p-6 space-y-6">
+      <nav class="flex flex-col gap-4">
+        <a th:href="@{/dashboard}" class="hover:text-blue-300">Dashboard</a>
+        <a th:href="@{/book-appointment}" class="hover:text-blue-300">Agendar Cita</a>
+        <a th:href="@{/appointments}" class="hover:text-blue-300">Ver Citas</a>
+        <a th:href="@{/cancel-appointment}" class="font-semibold text-white">Cancelar Cita</a>
+        <a th:href="@{/veterinarians}" class="hover:text-blue-300">Veterinarios</a>
+        <a th:href="@{/vaccination}" class="hover:text-blue-300">Vacunación</a>
+        <a href="#" onclick="logout()" class="hover:text-red-400">Cerrar Sesión</a>
+      </nav>
+    </aside>
+
+    <main class="flex-1 p-10">
+      <h2 class="text-3xl font-bold mb-6">Cancelar Cita</h2>
+
+      <div class="bg-white p-6 rounded-lg shadow-md max-w-xl">
+        <form id="cancelForm" class="space-y-4">
+          <label for="appointmentSelect" class="block font-medium">Seleccione una cita:</label>
+          <select id="appointmentSelect" required class="w-full border p-2 rounded">
+            <option disabled selected>Seleccione una cita para cancelar</option>
+          </select>
+
+          <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+            Cancelar Cita
+          </button>
+        </form>
+
+        <div id="mensaje" class="text-center mt-4 text-sm font-medium"></div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    const token = getCookie("jwt");
+
+    fetch("/api/client/cancel-appointments", {
+        method: "GET",
+        credentials: "include"
+    })
+
+    .then(res => res.json())
+    .then(data => {
+      const select = document.getElementById("appointmentSelect");
+      console.log("Citas cancelables:", data);
+      data.forEach(cita => {
+        const option = document.createElement("option");
+        option.value = cita.id;
+        option.textContent = `📅 ${cita.fecha} ${cita.hora} - ${cita.veterinario} (${cita.servicio})`;
+        select.appendChild(option);
+      });
+    });
+
+    document.getElementById("cancelForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const id = document.getElementById("appointmentSelect").value;
+
+      const response = await fetch(`/api/client/cancel-appointments/${id}/cancel`, {
+        method: "POST",
+        credentials: "include"
+      });
+
+      const mensaje = document.getElementById("mensaje");
+      if (response.ok) {
+        mensaje.textContent = "✅ Cita cancelada exitosamente.";
+        mensaje.className = "text-green-600 mt-4 text-center";
+        document.getElementById("appointmentSelect").remove(document.getElementById("appointmentSelect").selectedIndex);
+      } else {
+        mensaje.textContent = "❌ Error al cancelar la cita.";
+        mensaje.className = "text-red-600 mt-4 text-center";
+      }
+    });
+    console.log("Citas cancelables:", data);
+
+    function logout() {
+    document.cookie = "jwt=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Lax";
+
+    window.location.href = "/";
+  }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard - Veterinario</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+  <header class="bg-blue-900 text-white py-4 px-6 flex justify-between items-center w-full">
+    <h1 class="text-xl font-bold">Clínica y Veterinaria Puente Blanco</h1>
+    <span>Panel del Veterinario</span>
+  </header>
+
+  <div class="flex flex-1">
+    <aside class="w-64 bg-gray-800 text-white flex flex-col justify-between">
+      <div>
+        <nav class="flex flex-col p-4 space-y-4">
+          <a href="/vet/veterinarian_dashboard.html" class="flex items-center gap-3 font-semibold hover:text-blue-300"><i class="fa-solid fa-table-columns"></i> Dashboard</a>
+          <a href="/vet/veterinarian_appointments.html" class="flex items-center gap-3 hover:text-blue-300"><i class="fa-solid fa-calendar-days"></i> Citas Agendadas</a>
+          <a href="/vet/veterinarian_attend.html" class="flex items-center gap-3 hover:text-blue-300"><i class="fa-solid fa-stethoscope"></i> Atender Cita</a>
+          <a href="/vet/veterinarian_clinicalreport.html" class="flex items-center gap-3 hover:text-blue-300"><i class="fa-solid fa-user"></i> Historial del Paciente</a>
+        </nav>
+      </div>
+      <button onclick="logout()" class="m-4 flex items-center justify-center gap-2 bg-gray-100 text-red-500 px-4 py-2 rounded hover:bg-gray-200">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i> Cerrar Sesión
+      </button>
+    </aside>
+
+    <main class="flex-1 p-8 space-y-6">
+      <h1 class="text-3xl font-bold text-gray-800">Dashboard del Veterinario</h1>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 justify-center max-w-3xl mx-auto">
+        <div class="bg-white p-6 rounded shadow flex items-center justify-between w-full">
+          <div>
+            <div class="text-gray-500 text-sm">Citas Hoy</div>
+            <div class="text-2xl font-bold text-blue-700" id="todayAppointments">...</div>
+            <div class="text-sm text-gray-400">Total de citas</div>
+          </div>
+          <i class="fa-regular fa-calendar text-3xl text-blue-500"></i>
+        </div>
+
+        <div class="bg-white p-6 rounded shadow flex items-center justify-between w-full">
+          <div>
+            <div class="text-gray-500 text-sm">Pacientes Atendidos</div>
+            <div class="text-2xl font-bold text-green-700" id="weekPatients">...</div>
+            <div class="text-sm text-gray-400">Esta semana</div>
+          </div>
+          <i class="fa-solid fa-user-check text-3xl text-green-500"></i>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-white p-6 rounded shadow w-full">
+          <h2 class="text-lg font-semibold mb-4">Servicios Brindados</h2>
+          <canvas id="servicesChart"></canvas>
+        </div>
+
+        <div class="bg-white p-6 rounded shadow w-full">
+          <h2 class="text-lg font-semibold mb-4">Calendario</h2>
+          <div class="flex items-center justify-between mb-4">
+            <button id="prevMonth" class="text-blue-600 hover:underline">&lt;</button>
+            <div id="calendarTitle" class="text-sm font-medium">...</div>
+            <button id="nextMonth" class="text-blue-600 hover:underline">&gt;</button>
+          </div>
+          <div class="grid grid-cols-7 gap-2 text-center text-gray-600 text-sm">
+            <div>Dom</div><div>Lun</div><div>Mar</div><div>Mié</div><div>Jue</div><div>Vie</div><div>Sáb</div>
+          </div>
+          <div id="calendarDays" class="grid grid-cols-7 gap-2 text-center mt-2"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function cargarGraficoServicios() {
+      fetch('/api/vet/completed-services-summary', { credentials: 'include' })
+        .then(res => res.json())
+        .then(data => {
+          const labels = Object.keys(data);
+          const values = Object.values(data);
+          const backgroundColors = ['#60A5FA', '#34D399', '#A78BFA', '#FBBF24', '#F87171', '#F472B6', '#FCD34D'];
+
+          const ctx = document.getElementById('servicesChart').getContext('2d');
+          new Chart(ctx, {
+            type: 'pie',
+            data: {
+              labels,
+              datasets: [{
+                data: values,
+                backgroundColor: backgroundColors.slice(0, labels.length)
+              }]
+            },
+            options: {
+              plugins: {
+                legend: { position: 'bottom' }
+              },
+              responsive: true
+            }
+          });
+        })
+        .catch(err => {
+          console.error("Error al cargar gráfico de servicios:", err);
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      fetch('/api/vet/today-appointments-count', { credentials: 'include' })
+        .then(res => res.json()).then(data => document.getElementById('todayAppointments').textContent = data ?? 0);
+
+      fetch('/api/vet/week-patients-count', { credentials: 'include' })
+        .then(res => res.json()).then(data => document.getElementById('weekPatients').textContent = data ?? 0);
+
+      cargarGraficoServicios();
+      renderCalendar();
+    });
+
+    const calendarTitle = document.getElementById('calendarTitle');
+    const calendarDays = document.getElementById('calendarDays');
+    const now = new Date();
+    let currentMonth = now.getMonth();
+    let currentYear = now.getFullYear();
+
+    document.getElementById('prevMonth').onclick = () => {
+      currentMonth--;
+      if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+      renderCalendar();
+    };
+    document.getElementById('nextMonth').onclick = () => {
+      currentMonth++;
+      if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+      renderCalendar();
+    };
+
+    function renderCalendar() {
+      calendarTitle.textContent = new Date(currentYear, currentMonth).toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
+      const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+      const totalDays = new Date(currentYear, currentMonth + 1, 0).getDate();
+      calendarDays.innerHTML = '';
+      for (let i = 0; i < firstDay; i++) calendarDays.innerHTML += '<div></div>';
+
+      fetch(`/api/vet/appointments-by-month?ym=${currentYear}-${String(currentMonth + 1).padStart(2, '0')}`, { credentials: 'include' })
+        .then(res => {
+          if (!res.ok) throw new Error("HTTP " + res.status);
+          return res.json();
+        })
+        .then(data => {
+          for (let day = 1; day <= totalDays; day++) {
+            const key = String(day).padStart(2, '0');
+            const status = data[key];
+            let colorClass = '';
+            if (status === 'PROGRAMADA') colorClass = 'bg-blue-200 rounded-full';
+            else if (status === 'COMPLETADA') colorClass = 'bg-green-200 rounded-full';
+            calendarDays.innerHTML += `<div class="py-1 ${colorClass}">${day}</div>`;
+          }
+        })
+        .catch(err => {
+          console.error("Error al cargar calendario:", err);
+        });
+    }
+
+    function logout() {
+      document.cookie = "jwt=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Lax";
+      window.location.href = "/";
+    }
+  </script>
+
+</body>
+</html>
+

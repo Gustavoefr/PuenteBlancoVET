@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Scheduled Appointments</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/luxon@3.4.4/build/global/luxon.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+  <header class="bg-blue-900 text-white py-4 px-6 flex justify-between items-center w-full">
+    <h1 class="text-xl font-bold">Clínica y Veterinaria Puente Blanco</h1>
+    <span>Agenda de Citas</span>
+  </header>
+
+  <div class="flex flex-1">
+    <aside class="w-64 bg-gray-800 text-white flex flex-col justify-between min-h-full">
+      <div>
+        <nav class="flex flex-col p-4 space-y-4">
+          <a href="/vet/veterinarian_dashboard.html" class="flex items-center gap-3 font-semibold hover:text-blue-300"><i class="fa-solid fa-table-columns"></i> Dashboard</a>
+          <a href="/vet/veterinarian_appointments.html" class="flex items-center gap-3 text-blue-300"><i class="fa-solid fa-calendar-days"></i> Citas Agendadas</a>
+          <a href="/vet/veterinarian_attend.html" class="flex items-center gap-3 hover:text-blue-300"><i class="fa-solid fa-stethoscope"></i> Atender Cita</a>
+          <a href="/vet/veterinarian_clinicalreport.html" class="flex items-center gap-3 hover:text-blue-300"><i class="fa-solid fa-user"></i> Historial del Paciente</a>
+        </nav>
+      </div>
+      <button onclick="logout()" class="m-4 flex items-center justify-center gap-2 bg-gray-100 text-red-500 px-4 py-2 rounded hover:bg-gray-200">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i> Cerrar Sesión
+      </button>
+    </aside>
+
+    <main class="flex-1 p-8 space-y-6">
+      <h1 class="text-3xl font-bold text-gray-800">Citas Agendadas</h1>
+
+      <div class="flex flex-col md:flex-row gap-4 items-center">
+        <input type="date" id="appointmentDate" class="border border-gray-300 rounded px-3 py-2" />
+        <input type="text" id="searchInput" placeholder="Buscar cliente o mascota..." class="border border-gray-300 rounded px-3 py-2 w-full md:w-80" />
+      </div>
+
+      <div class="bg-white p-6 rounded shadow">
+        <h2 class="text-xl font-semibold mb-4" id="dateHeading">Appointments for ...</h2>
+
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-sm text-gray-700">
+            <thead>
+              <tr class="bg-gray-100 text-left">
+                <th class="py-2 px-4">Hora</th>
+                <th class="py-2 px-4">Cliente</th>
+                <th class="py-2 px-4">Mascota</th>
+                <th class="py-2 px-4">Servicio</th>
+                <th class="py-2 px-4">Comentarios</th>
+                <th class="py-2 px-4">Estado</th>
+                <th class="py-2 px-4">Acción</th>
+              </tr>
+            </thead>
+            <tbody id="appointmentTableBody">
+              <tr>
+                <td colspan="7" class="text-center py-4 text-gray-500">No se encontraron citas para esta fecha.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const DateTime = luxon.DateTime;
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const dateInput = document.getElementById("appointmentDate");
+      const today = DateTime.now().toISODate();
+      dateInput.value = today;
+      loadAppointments(today);
+
+      dateInput.addEventListener("change", () => {
+        loadAppointments(dateInput.value);
+      });
+
+      document.getElementById("searchInput").addEventListener("input", () => {
+        filterAppointments();
+      });
+    });
+
+    function loadAppointments(date) {
+      document.getElementById("dateHeading").textContent = `Appointments for ${DateTime.fromISO(date).toLocaleString(DateTime.DATE_FULL)}`;
+      
+      fetch(`/api/vet/appointments?date=${date}`, { credentials: 'include' })
+        .then(res => res.json())
+        .then(data => renderTable(data))
+        .catch(err => {
+          console.error("Error loading appointments:", err);
+          renderTable([]);
+        });
+    }
+
+    function renderTable(appointments) {
+      const tbody = document.getElementById("appointmentTableBody");
+      tbody.innerHTML = "";
+
+      if (appointments.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-gray-500">No se encontraron citas para esta fecha.</td></tr>`;
+        return;
+      }
+
+      appointments.forEach(app => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td class="px-4 py-2">${app.hora}</td>
+          <td class="px-4 py-2">${app.cliente}</td>
+          <td class="px-4 py-2">${app.mascota}</td>
+          <td class="px-4 py-2">${app.servicio}</td>
+          <td class="px-4 py-2">${app.comentarios ?? ''}</td>
+          <td class="px-4 py-2">${app.estado}</td>
+          <td class="px-4 py-2">
+            <button onclick="atenderCita()" class="text-blue-600 hover:underline text-sm">Atender</button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function filterAppointments() {
+      const input = document.getElementById("searchInput").value.toLowerCase();
+      const rows = document.querySelectorAll("#appointmentTableBody tr");
+
+      rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(input) ? "" : "none";
+      });
+    }
+
+    function atenderCita() {
+      window.location.href = "/vet/veterinarian_attend.html";
+    }
+
+    function logout() {
+      document.cookie = "jwt=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Lax";
+      window.location.href = "/";
+    }
+  </script>
+
+</body>
+</html>
