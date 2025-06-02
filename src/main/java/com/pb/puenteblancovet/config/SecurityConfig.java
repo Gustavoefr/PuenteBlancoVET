@@ -1,7 +1,7 @@
-package com.puenteblanco.pb.config;
+package com.pb.puenteblancovet.config;
 
-import com.puenteblanco.pb.security.JwtAuthenticationFilter;
-import com.puenteblanco.pb.security.CustomUserDetailsService;
+import com.pb.puenteblancovet.security.JwtAuthenticationFilter;
+import com.pb.puenteblancovet.security.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
