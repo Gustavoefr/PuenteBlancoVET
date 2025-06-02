@@ -1,15 +1,12 @@
-package com.puenteblanco.pb.repository;
+package com.pb.puenteblancovet.repository;
 
-import com.puenteblanco.pb.entity.User;
+import com.pb.puenteblancovet.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-@Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-
-    Optional<User> findByEmail(String email);
-
-    boolean existsByEmail(String email);
+    Optional<User> findByCorreo(String correo);
+    boolean existsByCorreo(String correo);
+    boolean existsByNumeroIdentidad(String numeroIdentidad);
 }

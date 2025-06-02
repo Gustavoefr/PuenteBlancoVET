@@ -1,4 +1,5 @@
 package com.pb.puenteblancovet.entity;
+
 import jakarta.persistence.*;
 import lombok.*;
 

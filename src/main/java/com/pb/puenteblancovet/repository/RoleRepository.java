@@ -1,13 +1,12 @@
-package com.puenteblanco.pb.repository;
+package com.pb.puenteblancovet.repository;
 
-import com.puenteblanco.pb.entity.Role;
+import com.pb.puenteblancovet.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-@Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
 
-    Optional<Role> findByName(String name);
+    // ✅ Busca un rol por su nombre (ej: "CLIENT", "ADMIN", etc.)
+    Optional<Role> findByNombre(String nombre);
 }
