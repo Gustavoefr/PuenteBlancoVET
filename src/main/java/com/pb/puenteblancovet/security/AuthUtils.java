@@ -1,4 +1,4 @@
-package com.puenteblanco.pb.security;
+package com.pb.puenteblancovet.security;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;

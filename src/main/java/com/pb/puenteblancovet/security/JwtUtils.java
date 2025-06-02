@@ -1,6 +1,6 @@
-package com.puenteblanco.pb.security;
+package com.pb.puenteblancovet.security;
 
-import com.puenteblanco.pb.entity.User;
+import com.pb.puenteblancovet.entity.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;

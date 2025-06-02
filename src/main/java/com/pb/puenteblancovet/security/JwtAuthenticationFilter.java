@@ -1,4 +1,4 @@
-package com.puenteblanco.pb.security;
+package com.pb.puenteblancovet.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

@@ -1,7 +1,7 @@
-package com.puenteblanco.pb.security;
+package com.pb.puenteblancovet.security;
 
-import com.puenteblanco.pb.entity.User;
-import com.puenteblanco.pb.repository.UserRepository;
+import com.pb.puenteblancovet.entity.User;
+import com.pb.puenteblancovet.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

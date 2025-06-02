@@ -1,4 +1,4 @@
-package com.puenteblanco.pb.exception;
+package com.pb.puenteblancovet.exception;
 
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
