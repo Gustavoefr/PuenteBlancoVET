@@ -1,4 +1,4 @@
-package com.puenteblanco.pb.controller.client.view;
+package com.pb.puenteblancovet.controller.client.view;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

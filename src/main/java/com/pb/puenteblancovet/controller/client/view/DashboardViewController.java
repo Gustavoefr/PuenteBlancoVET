@@ -1,10 +1,10 @@
-package com.puenteblanco.pb.controller.client.view;
+package com.pb.puenteblancovet.controller.client.view;
 
-import com.puenteblanco.pb.dto.dashboard.DashboardClientResponseDto;
-import com.puenteblanco.pb.entity.Pet;
-import com.puenteblanco.pb.repository.PetRepository;
-import com.puenteblanco.pb.security.AuthUtils;
-import com.puenteblanco.pb.services.interfaces.DashboardService;
+import com.pb.puenteblancovet.dto.dashboard.DashboardClientResponseDto;
+import com.pb.puenteblancovet.entity.Pet;
+import com.pb.puenteblancovet.repository.PetRepository;
+import com.pb.puenteblancovet.security.AuthUtils;
+import com.pb.puenteblancovet.services.interfaces.DashboardService;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
