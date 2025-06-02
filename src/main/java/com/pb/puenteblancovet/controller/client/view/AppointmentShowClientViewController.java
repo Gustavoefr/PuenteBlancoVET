@@ -1,6 +1,4 @@
-// File: AppointmentClientController.java
-// File: AppointmentShowClientViewController.java
-package com.puenteblanco.pb.controller.client.view;
+package com.pb.puenteblancovet.controller.client.view;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;

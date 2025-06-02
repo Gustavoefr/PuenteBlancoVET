@@ -1,6 +1,6 @@
-package com.puenteblanco.pb.controller.client.view;
-import com.puenteblanco.pb.dto.dashboard.DashboardClientResponseDto;
-import com.puenteblanco.pb.services.interfaces.DashboardService;
+package com.pb.puenteblancovet.controller.client.view;
+import com.pb.puenteblancovet.dto.dashboard.DashboardClientResponseDto;
+import com.pb.puenteblancovet.services.interfaces.DashboardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
